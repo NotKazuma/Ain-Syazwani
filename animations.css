@@ -47,7 +47,7 @@ html.js .reveal-stagger.is-visible > *:nth-child(10) { opacity:1; transform:tran
 
 /* ---------- TYPING CURSOR + ink bleed ---------- */
 .typing-cursor { display: inline-block; width: 2px; height: 1em; background: #8d6e63; vertical-align: text-bottom; margin-left: 3px; animation: cursorBlink .7s step-end infinite; }
-.ink-char { display:inline-block; animation: inkBleed .45s ease both; }
+.ink-char { display:inline; white-space: normal; word-break: normal; overflow-wrap: anywhere; animation: inkBleed .45s ease both; }
 
 /* ---------- YES button pulse + hearts burst ---------- */
 .yes-btn.pulse-warm { animation: pulseWarm 2.6s infinite; }

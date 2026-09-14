@@ -358,29 +358,45 @@
       }
     }
 
-    // Poem typewriter — stanzas type in on scroll (poem pages only, !RM)
+    // Poem typewriter — word-level to preserve wrapping on Safari (char-level breaks word-wrap)
     (function(){
       var isPoem = /poetry-book\/poems\//.test(location.pathname);
       if (!isPoem || RM) return;
       var paras = document.querySelectorAll('.book .page p');
       if (!paras.length) return;
+      // Safari + small screens: skip char-typewriter, keep original wrapping
+      var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      var isNarrow = window.matchMedia('(max-width: 600px)').matches;
+      if (isSafari && isNarrow) return;
       function typePara(p){
         if (p.dataset.typed) return;
         p.dataset.typed='1';
-        var text=p.textContent;
-        // preserve <br> as newline markers — but textContent already flattened, so just type whole text
-        p.textContent='';
+        // keep <br> as line breaks
+        var html = p.innerHTML;
+        var parts = html.split(/<br\s*\/?>/i);
+        p.innerHTML='';
         var cursor=document.createElement('span'); cursor.className='typing-cursor'; cursor.style.fontSize='1em';
-        p.appendChild(cursor);
-        var chars=text.split('').map(function(ch){
-          var s=document.createElement('span'); s.className='ink-char'; s.textContent=ch; s.style.opacity='0';
-          p.insertBefore(s, cursor); return s;
+        var frag=document.createDocumentFragment();
+        var spans=[];
+        parts.forEach(function(part, idx){
+          // split preserving spaces by wrapping words
+          var words = part.split(/(\s+)/);
+          words.forEach(function(w){
+            if (!w) return;
+            var s=document.createElement('span'); s.className='ink-char'; s.textContent=w; s.style.opacity='0';
+            // spaces should wrap normally
+            if (/^\s+$/.test(w)) { s.style.display='inline'; }
+            frag.appendChild(s); spans.push(s);
+          });
+          if (idx < parts.length-1) frag.appendChild(document.createElement('br'));
         });
+        p.appendChild(frag);
+        p.appendChild(cursor);
         if (typeof gsap!=='undefined') {
-          gsap.to(chars, {opacity:1, duration:0.22, stagger:0.018, ease:'power2.out'});
-          gsap.delayedCall(chars.length*0.018+0.22+0.3, function(){ cursor.style.display='none'; });
+          gsap.to(spans, {opacity:1, duration:0.32, stagger:0.028, ease:'power2.out'});
+          gsap.delayedCall(spans.length*0.028+0.32+0.3, function(){ cursor.style.display='none'; });
         } else {
-          var i=0; (function step(){ if(i<chars.length){ chars[i].style.opacity='1'; i++; setTimeout(step, 18); } else setTimeout(function(){ cursor.style.display='none'; }, 300); })();
+          var i=0; (function step(){ if(i<spans.length){ spans[i].style.opacity='1'; i++; setTimeout(step, 28); } else setTimeout(function(){ cursor.style.display='none'; }, 300); })();
         }
       }
       if (hasIO) {
