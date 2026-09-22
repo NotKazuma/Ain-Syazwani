@@ -1,116 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>!function(){var ua=navigator.userAgent,ism=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)||(window.matchMedia('(max-width: 860px)').matches&&('ontouchstart'in window||navigator.maxTouchPoints>0));var h=document.documentElement;h.classList.add('js');h.classList.add(ism?'device-mobile':'device-desktop');}();</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://unpkg.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital@0;400;0,700;1;400&display=swap" rel="stylesheet">
-    <title>The Question - My Confession</title>
-    <meta name="description" content="The Question — will you walk this journey with me? A confession for Ain Syazwani.">
-    <meta name="theme-color" content="#f4f1ea">
-    <meta property="og:title" content="The Question - My Confession">
-    <meta property="og:description" content="The Question — will you walk this journey with me? A confession for Ain Syazwani.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://notkazuma.github.io/Ain-Syazwani/assets/nature_bg.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../animations.css">
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
-    <noscript>
-        <style>.reveal,.reveal-stagger>*{opacity:1!important;transform:none!important;filter:none!important}#loader{display:none!important}#content{opacity:1!important}</style>
-    </noscript>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>document.documentElement.classList.add('js')</script>
+  <title>The Question - My Confession</title>
+  <meta name="description" content="The Question — will you walk this journey with me? A confession for Ain Syazwani.">
+  <meta name="theme-color" content="#07100b">
+  <meta property="og:title" content="The Question - My Confession">
+  <meta property="og:description" content="The Question — will you walk this journey with me? A confession for Ain Syazwani.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://notkazuma.github.io/Ain-Syazwani/assets/nature_bg.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
+  <link rel="preload" as="image" href="../assets/img/forest-1100.webp" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="../assets/css/site.css">
 </head>
-<body>
-    <div id="scroll-progress" aria-hidden="true"></div>
-    <div id="loader">
-        <div class="loader-heart">💌</div>
-        <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
-        <div class="loader-text">The most important part...</div>
-    </div>
-    <div id="content">
-        <div class="hearts" aria-hidden="true">
-            <div class="heart">❤️</div>
-            <div class="heart">💕</div>
-            <div class="heart">💖</div>
-            <div class="heart">💗</div>
-            <div class="heart">💓</div>
-        </div>
-        <div class="book">
-            <section class="page reveal">
-                <h1>The Question</h1>
-                <p style="text-align: center;">Here we are. You know why I made this. It's a confession from me to you.</p>
-                <p style="font-size: 1.8rem; color: #3e2723; margin: 2rem 0; font-weight: 500; text-align: center; font-family: 'Playfair Display', serif;">Will you walk this journey with me?</p>
-                <div id="buttons-container" class="choice-buttons">
-                    <button id="yes-btn" class="yes-btn" onclick="handleResponse('yes')">Yes, I will ❤️</button>
-                    <button id="no-btn" class="no-btn" onclick="handleResponse('no')">No, thank you</button>
-                </div>
-                <div id="response" style="text-align: center; margin-top: 1.4rem; font-size: 1.05rem; min-height: 88px; padding-bottom: 1rem"></div>
-            </section>
-            <div class="home-wrap"><a href="../index.html" class="home-button is-inflow" aria-label="Back to home">← Home</a></div>
-        </div>
-    </div>
-    <script src="../script.js" defer></script>
-    <script>
-        let noClickCount = 0;
-        const fleePositions = [
-            {left: '10%', top: '85%'},
-            {left: '85%', top: '85%'},
-            {left: '85%', top: '15%'},
-            {left: '10%', top: '15%'},
-            {left: '50%', top: '90%'},
-            {left: '80%', top: '50%'},
-            {left: '20%', top: '50%'}
-        ];
-
-        function handleResponse(answer) {
-            const response = document.getElementById('response');
-            const noBtn = document.getElementById('no-btn');
-            const container = document.getElementById('buttons-container');
-
-            if (answer === 'yes') {
-                response.innerHTML = '<p style="color: #4caf50; font-size: 1.6rem; font-weight: 600; font-family: \'Playfair Display\', serif; margin-bottom: .8rem">💖 You just made me the happiest person! Thank you!</p>';
-                container.style.display = 'none';
-                const nextLink = document.createElement('a');
-                nextLink.innerHTML = 'Continue →';
-                nextLink.href = 'next-page.html';
-                nextLink.className = 'nav-link';
-                nextLink.style.display = 'block';
-                nextLink.style.margin = '.2rem auto 0';
-                nextLink.style.maxWidth = '280px';
-                nextLink.style.textAlign = 'center';
-                nextLink.style.fontSize = '1rem';
-                nextLink.style.padding = '.95rem 1.2rem';
-                response.appendChild(nextLink);
-                nextLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
-
-            noClickCount++;
-            if (noClickCount > 7) {
-                noBtn.style.display = 'none';
-                response.innerHTML = '<p style="color: #d32f2f; font-size: 1.5rem; font-family: \'Playfair Display\', serif;">The button vanished. Now there\'s only one choice left.</p>';
-                return;
-            }
-
-            const pos = fleePositions[(noClickCount - 1) % fleePositions.length];
-            noBtn.style.position = 'absolute';
-            noBtn.style.transition = 'all 0.5s ease-out';
-            noBtn.style.left = pos.left;
-            noBtn.style.top = pos.top;
-            noBtn.style.transform = 'rotate(10deg) scale(0.9)';
-
-            container.style.position = 'relative';
-            container.style.minHeight = '250px';
-
-            response.innerHTML = '<p style="color: #e65100; font-size: 1.4rem; font-family: \'Playfair Display\', serif;">That\'s not the right answer! 😊</p>';
-        }
-    </script>
+<body class="is-reading" data-root="../" data-page="love-confession/main-content.html" data-title="The Question - My Confession">
+  <a class="skip-link" href="#main">Skip to the letter</a>
+  <div class="backdrop" aria-hidden="true"><div class="backdrop__img"></div></div>
+  <canvas id="fireflies" aria-hidden="true"></canvas>
+  <div class="progress" aria-hidden="true"></div>
+  <nav class="topbar" aria-label="Primary">
+    <a href="../index.html">Home</a>
+    <a href="../love-confession/index.html" class="is-active">Letter</a>
+    <a href="../poetry-book/index.html">Poems</a>
+    <span class="sep" aria-hidden="true"></span>
+    <button id="focus-toggle" type="button" aria-pressed="false" title="Dim the forest for reading">Focus</button>
+  </nav>
+  <main id="main" class="stage">
+    <article class="paper">
+      <ol class="chapters" aria-label="Chapter 3 of 6"><li class="is-done"><span>I</span></li><li class="is-done"><span>II</span></li><li class="is-current"><span>III</span></li><li class=""><span>IV</span></li><li class=""><span>V</span></li><li class=""><span>VI</span></li></ol>
+      <h1 class="title title--sm">The Question</h1>
+      <div class="flourish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.2 0 3.7 1.3 4.5 2.6.3.5 1.3.5 1.6 0 .8-1.3 2.3-2.6 4.5-2.6 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg></div>
+      <p class="lead">Here we are. You know why I made this. It's a confession from me to you.</p>
+      <p class="question">Will you walk this journey with me?</p>
+      <div class="arena" data-next="next-page.html">
+        <button id="yes-btn" class="btn btn--wax yes-btn" type="button">Yes, I will ❤️</button>
+        <button id="no-btn" class="btn btn--ghost" type="button">No, thank you</button>
+      </div>
+      <div id="response" class="response" aria-live="polite"></div>
+    </article>
+  </main>
+  <script src="../assets/js/site.js"></script>
 </body>
 </html>

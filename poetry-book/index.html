@@ -1,88 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>!function(){var ua=navigator.userAgent,ism=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)||(window.matchMedia('(max-width: 860px)').matches&&('ontouchstart'in window||navigator.maxTouchPoints>0));var h=document.documentElement;h.classList.add('js');h.classList.add(ism?'device-mobile':'device-desktop');}();</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://unpkg.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital@0;400;0,700;1;400&display=swap" rel="stylesheet">
-    <title>Verses for You</title>
-    <meta name="description" content="Verses for Ain — small poems, gently told.">
-    <meta name="theme-color" content="#f4f1ea">
-    <meta property="og:title" content="Verses for You">
-    <meta property="og:description" content="Verses for Ain — small poems, gently told.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://notkazuma.github.io/Ain-Syazwani/assets/nature_bg.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="../animations.css">
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
-    <noscript>
-        <style>.reveal,.reveal-stagger>*{opacity:1!important;transform:none!important;filter:none!important}#loader{display:none!important}#content{opacity:1!important}</style>
-    </noscript>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>document.documentElement.classList.add('js')</script>
+  <title>Verses for You</title>
+  <meta name="description" content="Verses for Ain — small poems, gently told.">
+  <meta name="theme-color" content="#07100b">
+  <meta property="og:title" content="Verses for You">
+  <meta property="og:description" content="Verses for Ain — small poems, gently told.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://notkazuma.github.io/Ain-Syazwani/assets/nature_bg.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
+  <link rel="preload" as="image" href="../assets/img/forest-1100.webp" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="../assets/css/site.css">
 </head>
-<body>
-    <div id="scroll-progress" aria-hidden="true"></div>
-    <div id="loader">
-        <div class="loader-heart">📜</div>
-        <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
-        <div class="loader-text">Opening the collection...</div>
-    </div>
-    <div id="content">
-        <div class="hearts" aria-hidden="true">
-            <div class="heart">❤️</div>
-            <div class="heart">💕</div>
-            <div class="heart">💖</div>
-            <div class="heart">💗</div>
-            <div class="heart">💓</div>
-        </div>
-        <div class="book">
-            <section class="page reveal">
-                <h1>Verses for You</h1>
-                <p class="dedication">To Nur Ain Syazwani —<br>these lines belong to you.</p>
-                <p>You reminded me why words matter.</p>
-                <nav>
-                    <h2>Contents</h2>
-                    <ul class="reveal-stagger">
-                        <li><a href="poems/poem1.html" class="toc-link">I. The Sudden Shift</a></li>
-                        <li><a href="poems/poem2.html" class="toc-link">II. Early Days &amp; Car Park Conversations</a></li>
-                        <li><a href="poems/poem3.html" class="toc-link">III. Overthinking the Unsent Text</a></li>
-                        <li><a href="poems/poem4.html" class="toc-link">IV. The Notification High</a></li>
-                        <li><a href="poems/poem5.html" class="toc-link">V. Small Talks &amp; Unfiltered Hours</a></li>
-                        <li><a href="poems/poem6.html" class="toc-link">VI. The Butterfly Phase</a></li>
-                        <li><a href="poems/poem7.html" class="toc-link">VII. Inside Jokes &amp; Coded Language</a></li>
-                        <li><a href="poems/poem8.html" class="toc-link">VIII. My Favorite Distraction</a></li>
-                        <li><a href="poems/poem9.html" class="toc-link">IX. Sanctuary in the Noise</a></li>
-                        <li><a href="poems/poem10.html" class="toc-link">X. Taking It Day by Day</a></li>
-                    </ul>
-                </nav>
-            </section>
-            <section class="page reveal">
-                <h2>Words from Others</h2>
-                <div class="quotes-container reveal-stagger">
-                    <div class="quote-box">
-                        <blockquote>"The best thing to hold onto in life is each other." — Audrey Hepburn</blockquote>
-                    </div>
-                    <div class="quote-box">
-                        <blockquote>"You are my sun, my moon, and all my stars." — E.E. Cummings</blockquote>
-                    </div>
-                    <div class="quote-box">
-                        <blockquote>"In all the world, there is no love for you like mine." — Maya Angelou</blockquote>
-                    </div>
-                    <div class="quote-box">
-                        <blockquote>"I love you not only for what you are, but for what I am when I am with you." — Roy Croft</blockquote>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <a href="../index.html" class="home-button">← Home</a>
-    </div>
-    <script src="../script.js" defer></script>
+<body class="is-reading" data-root="../" data-page="poetry-book/index.html" data-title="Verses for You">
+  <a class="skip-link" href="#main">Skip to the letter</a>
+  <div class="backdrop" aria-hidden="true"><div class="backdrop__img"></div></div>
+  <canvas id="fireflies" aria-hidden="true"></canvas>
+  <div class="progress" aria-hidden="true"></div>
+  <nav class="topbar" aria-label="Primary">
+    <a href="../index.html">Home</a>
+    <a href="../love-confession/index.html">Letter</a>
+    <a href="../poetry-book/index.html" aria-current="page">Poems</a>
+    <span class="sep" aria-hidden="true"></span>
+    <button id="focus-toggle" type="button" aria-pressed="false" title="Dim the forest for reading">Focus</button>
+  </nav>
+  <main id="main" class="stage">
+    <article class="paper paper--wide">
+      <span class="eyebrow">A collection</span>
+      <h1 class="title">Verses for You</h1>
+      <div class="flourish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.2 0 3.7 1.3 4.5 2.6.3.5 1.3.5 1.6 0 .8-1.3 2.3-2.6 4.5-2.6 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg></div>
+      <p class="dedication">To Nur Ain Syazwani —<br/>these lines belong to you.</p>
+      <p class="lead">You reminded me why words matter.</p>
+      <nav aria-labelledby="contents-h">
+        <h2 class="toc-heading" id="contents-h">Contents</h2>
+        <ol class="toc">
+        <li data-reveal style="--d:0.00s"><a href="poems/poem1.html"><span class="num">I.</span><span class="name">The Sudden Shift</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.05s"><a href="poems/poem2.html"><span class="num">II.</span><span class="name">Early Days &amp; Car Park Conversations</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.10s"><a href="poems/poem3.html"><span class="num">III.</span><span class="name">Overthinking the Unsent Text</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.15s"><a href="poems/poem4.html"><span class="num">IV.</span><span class="name">The Notification High</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.20s"><a href="poems/poem5.html"><span class="num">V.</span><span class="name">Small Talks &amp; Unfiltered Hours</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.25s"><a href="poems/poem6.html"><span class="num">VI.</span><span class="name">The Butterfly Phase</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.30s"><a href="poems/poem7.html"><span class="num">VII.</span><span class="name">Inside Jokes &amp; Coded Language</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.35s"><a href="poems/poem8.html"><span class="num">VIII.</span><span class="name">My Favorite Distraction</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.40s"><a href="poems/poem9.html"><span class="num">IX.</span><span class="name">Sanctuary in the Noise</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li data-reveal style="--d:0.45s"><a href="poems/poem10.html"><span class="num">X.</span><span class="name">Taking It Day by Day</span><span class="go" aria-hidden="true">→</span></a></li>
+        </ol>
+      </nav>
+      <h2 class="subtitle">Words from Others</h2>
+      <ul class="quotes quotes--grid">
+        <li data-reveal><blockquote class="quote">"The best thing to hold onto in life is each other." — Audrey Hepburn</blockquote></li>
+        <li data-reveal><blockquote class="quote">"You are my sun, my moon, and all my stars." — E.E. Cummings</blockquote></li>
+        <li data-reveal><blockquote class="quote">"In all the world, there is no love for you like mine." — Maya Angelou</blockquote></li>
+        <li data-reveal><blockquote class="quote">"I love you not only for what you are, but for what I am when I am with you." — Roy Croft</blockquote></li>
+      </ul>
+    </article>
+  </main>
+  <script src="../assets/js/site.js"></script>
 </body>
 </html>

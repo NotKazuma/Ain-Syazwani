@@ -1,70 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>!function(){var ua=navigator.userAgent,ism=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)||(window.matchMedia('(max-width: 860px)').matches&&('ontouchstart'in window||navigator.maxTouchPoints>0));var h=document.documentElement;h.classList.add('js');h.classList.add(ism?'device-mobile':'device-desktop');}();</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://unpkg.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital@0;400;0,700;1;400&display=swap" rel="stylesheet">
-    <title>A Letter for Ain</title>
-    <meta name="description" content="A letter for Ain — words from my heart to yours. A quiet place for a confession and poems.">
-    <meta name="theme-color" content="#f4f1ea">
-    <meta property="og:title" content="A Letter for Ain">
-    <meta property="og:description" content="A letter for Ain — words from my heart to yours. A quiet place for a confession and poems.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://notkazuma.github.io/Ain-Syazwani/assets/nature_bg.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="animations.css">
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js" defer></script>
-    <noscript>
-        <style>.reveal,.reveal-stagger>*{opacity:1!important;transform:none!important;filter:none!important}#loader{display:none!important}#content{opacity:1!important}</style>
-    </noscript>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>document.documentElement.classList.add('js')</script>
+  <title>A Letter for Ain</title>
+  <meta name="description" content="A letter for Ain — words from my heart to yours. A quiet place for a confession and poems.">
+  <meta name="theme-color" content="#07100b">
+  <meta property="og:title" content="A Letter for Ain">
+  <meta property="og:description" content="A letter for Ain — words from my heart to yours. A quiet place for a confession and poems.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://notkazuma.github.io/Ain-Syazwani/assets/nature_bg.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
+  <link rel="preload" as="image" href="assets/img/forest-1100.webp" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
-    <div id="scroll-progress" aria-hidden="true"></div>
-    <div id="loader">
-        <div class="loader-heart">✉️</div>
-        <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
-        <div class="loader-text">Unfolding the letter...</div>
-    </div>
-    <div id="content">
-        <a id="bookmark-chip" href="#" aria-label="Continue reading"><span>Continue where you left →</span></a>
-        <div class="hearts" aria-hidden="true">
-            <div class="heart">❤️</div>
-            <div class="heart">💕</div>
-            <div class="heart">💖</div>
-            <div class="heart">💗</div>
-            <div class="heart">💓</div>
+<body class="home" data-root="" data-page="home" data-title="">
+  <a class="skip-link" href="#main">Skip to the letter</a>
+  <div class="backdrop" aria-hidden="true"><div class="backdrop__img"></div></div>
+  <canvas id="fireflies" aria-hidden="true"></canvas>
+  <main id="main" class="stage">
+    <div class="home-scene">
+      <div class="envelope-wrap">
+        <p class="for">For Ain</p>
+        <div class="envelope" aria-hidden="true">
+          <div class="envelope__back"></div>
+          <div class="envelope__card"></div>
+          <div class="envelope__front"></div>
+          <div class="envelope__flap"></div>
         </div>
-        <div class="book">
-            <section class="page hero-page reveal">
-                <h1>A Letter for Ain</h1>
-                <p class="dedication" id="dedication-typing" data-text="Words from my heart to yours">Words from my heart to yours</p>
+        <button id="seal" class="seal" type="button" aria-label="Break the seal and open the letter">A</button>
+        <p class="hint">Tap the seal to open</p>
+      </div>
 
-                <div class="journey-buttons">
-                    <a href="love-confession/index.html" class="journey-btn">
-                        Open My Letter
-                    </a>
-                    <a href="poetry-book/index.html" class="journey-btn">
-                        Poetry Collection
-                    </a>
-                </div>
-                <div class="utility-bar"><button id="focus-toggle" class="utility-btn" aria-pressed="false" title="Reading focus">Focus</button></div>
-
-                <nav class="footer-nav">
-                    <p>Written by Muhammad Afif Aiman for Nur Ain Syazwani</p>
-                </nav>
-
-            </section>
+      <article class="paper letter-card">
+        <h1 class="title">A Letter for Ain</h1>
+        <div class="flourish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.2 0 3.7 1.3 4.5 2.6.3.5 1.3.5 1.6 0 .8-1.3 2.3-2.6 4.5-2.6 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg></div>
+        <p class="dedication typing" id="dedication" data-text="Words from my heart to yours" aria-label="Words from my heart to yours">Words from my heart to yours</p>
+        <div class="actions">
+          <a class="btn btn--wax" href="love-confession/index.html">Open My Letter</a>
+          <a class="btn btn--ghost" href="poetry-book/index.html">Poetry Collection</a>
         </div>
+      </article>
     </div>
-    <script src="script.js" defer></script>
+    <p class="credit">Written by Muhammad Afif Aiman for Nur Ain Syazwani</p>
+  </main>
+  <a id="bookmark" class="bookmark" href="#" hidden><span aria-hidden="true">↺</span> Continue: <span class="bookmark__label">where you left</span></a>
+  <script src="assets/js/site.js"></script>
 </body>
 </html>
