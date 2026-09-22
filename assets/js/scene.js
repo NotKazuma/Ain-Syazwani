@@ -99,6 +99,13 @@
     dusk:  { flies: 26, leaves: 12, colors: ['#c98a3c', '#b8612e', '#d9b25a', '#8c3b24'] },
     night: { flies: 46, leaves: 3,  colors: ['#4c5d46', '#5d6a50'] }
   }[time] || { flies: 20, leaves: 8, colors: ['#9fb872'] };
+  var RAIN = document.body.getAttribute('data-mood') === 'rain';
+  if (RAIN) MIX = { flies: time === 'night' ? 10 : 4, leaves: 2, colors: ['#4c5d46', '#6b6f55'] };
+  var drops = [];
+  function drop(anywhere) {
+    return { x: Math.random() * (W + 200) - 100, y: anywhere ? Math.random() * H : -40 - Math.random() * 200,
+      len: 10 + Math.random() * 18, v: 9 + Math.random() * 7, z: 0.4 + Math.random() * 0.7 };
+  }
 
   function sizeParticles() {
     if (!pctx) return;
@@ -110,6 +117,8 @@
     flies = []; leaves = [];
     for (var i = 0; i < Math.round(MIX.flies * small); i++) flies.push(fly(true));
     for (var j = 0; j < Math.round(MIX.leaves * small); j++) leaves.push(leaf(true));
+    drops = [];
+    if (RAIN) for (var k = 0; k < Math.round(160 * small); k++) drops.push(drop(true));
   }
   function fly(anywhere) {
     return { x: Math.random() * W, y: anywhere ? Math.random() * H : H + 10, r: 1 + Math.random() * 1.8,
@@ -144,6 +153,17 @@
     if (!pctx) return;
     pctx.clearRect(0, 0, W, H);
     pctx.globalCompositeOperation = 'source-over';
+    if (drops.length) {
+      pctx.lineCap = 'round';
+      for (var d = 0; d < drops.length; d++) {
+        var r = drops[d];
+        r.y += r.v * r.z; r.x -= r.v * r.z * 0.18;
+        if (r.y > H + 30) drops[d] = r = drop(false);
+        pctx.strokeStyle = 'rgba(200,215,230,' + (0.10 + r.z * 0.22) + ')';
+        pctx.lineWidth = r.z * 1.2;
+        pctx.beginPath(); pctx.moveTo(r.x, r.y); pctx.lineTo(r.x + r.len * 0.18, r.y - r.len); pctx.stroke();
+      }
+    }
     for (var j = 0; j < leaves.length; j++) {
       var l = leaves[j];
       l.t += 0.012; l.y += l.vy * l.z; l.x += Math.sin(l.t) * l.sway * l.z * 0.6; l.rot += l.vr; l.flip += 0.03;
