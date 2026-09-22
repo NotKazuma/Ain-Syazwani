@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Finale — love-confession/finale.html
+   finale.js walks <main data-step> through: intro → quote → form → title →
+   credits → end. Everything here keys off that attribute.
+   ========================================================================== */
+
+.finale-page { overflow: hidden; }
+.finale-page .scene__far { transform-origin: 52% 78%; transition: transform 18s cubic-bezier(.35, 0, .15, 1), filter 2s; }
+.finale-page .scene__near { transform-origin: 50% 70%; transition: transform 16s cubic-bezier(.4, 0, .2, 1), opacity 10s ease; }
+.finale-page .scene__mist--a { transition: opacity 6s; }
+.finale-page.dolly .scene__far { transform: scale(1.5) translate3d(0, 2%, 0); }
+.finale-page.dolly .scene__near { transform: scale(2.6); opacity: 0; }
+.finale-page.dolly-late .scene__far { filter: blur(3px); }
+
+.finale {
+  position: fixed; inset: 0; z-index: 3;
+  display: grid; place-items: center;
+  color: var(--on-dark);
+  text-align: center;
+}
+.finale::before {                           /* fade in from black */
+  content: ""; position: absolute; inset: 0; background: #000; z-index: 20; pointer-events: none;
+  animation: fromBlack 2.4s ease .2s both;
+}
+@keyframes fromBlack { to { opacity: 0; } }
+
+/* Letterbox bars */
+.letterbox { position: fixed; left: 0; right: 0; height: 11vh; background: #000; z-index: 15; transition: transform 1.6s var(--ease-out); }
+.letterbox--top { top: 0; transform: translateY(-100%); }
+.letterbox--bottom { bottom: 0; transform: translateY(100%); }
+.finale[data-step] .letterbox { transform: none; }
+.finale[data-step="end"] .letterbox { transform: translateY(var(--lb-out, 0)); }
+
+/* Film grain */
+.grain {
+  position: fixed; inset: -50%; z-index: 14; pointer-events: none; opacity: .09; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation: grain .5s steps(4) infinite;
+}
+@keyframes grain { 0% { transform: translate(0, 0); } 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-1%, 3%); } }
+
+#finale-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
+
+.finale__layer { position: absolute; inset: 11vh 16px; display: grid; place-items: center; z-index: 6; pointer-events: none; }
+.finale__quote {
+  font-family: var(--serif-display); font-style: italic; font-weight: 500;
+  font-size: clamp(1.6rem, 1.1rem + 2.6vw, 3rem); line-height: 1.25; max-width: 22ch; margin: 0;
+  text-shadow: 0 2px 30px rgba(0,0,0,.7);
+  opacity: 0; transform: translateY(14px); filter: blur(6px);
+  transition: opacity 2.2s var(--ease-soft), transform 2.6s var(--ease-out), filter 2.2s;
+}
+.finale[data-step="quote"] .finale__quote { opacity: 1; transform: none; filter: none; }
+
+.finale__titlewrap { transition: opacity 1.6s var(--ease-soft), transform 2s var(--ease-out); }
+.finale__title {
+  font-family: var(--serif-display); font-style: italic; font-weight: 500;
+  font-size: var(--title-size, 96px); line-height: 1; margin: 0;
+  color: #f7e7c6; text-shadow: 0 0 30px rgba(255,220,150,.45), 0 2px 20px rgba(0,0,0,.6);
+  opacity: 0; transition: opacity 2.4s var(--ease-soft);
+}
+.finale__ded {
+  font-family: var(--serif-display); font-style: italic; font-size: clamp(1.1rem, .9rem + 1vw, 1.6rem);
+  color: var(--on-dark-soft); margin: .8em 0 0; min-height: 1.4em; opacity: 0; transition: opacity 1.4s;
+}
+.finale[data-step="title"] .finale__title, .finale[data-step="title"] .finale__ded { opacity: 1; }
+.finale[data-step="credits"] .finale__titlewrap, .finale[data-step="end"] .finale__titlewrap { opacity: 0; transform: translateY(-30px) scale(.96); }
+
+/* Credits */
+.credits { position: absolute; inset: 11vh 0; overflow: hidden; z-index: 7; pointer-events: none;
+  -webkit-mask: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+  mask: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+  opacity: 0; transition: opacity 1.2s;
+}
+.finale[data-step="credits"] .credits { opacity: 1; }
+.credits__roll { position: absolute; left: 0; right: 0; top: 100%; padding: 0 16px; }
+.finale[data-step="credits"] .credits__roll { animation: roll var(--roll, 30s) linear forwards; }
+@keyframes roll { to { transform: translateY(calc(-100% - 78vh)); } }
+.credit-block { margin: 0 auto 3.2rem; max-width: 560px; }
+.credit-role { font-family: var(--ui); font-size: .72rem; letter-spacing: .32em; text-transform: uppercase; color: var(--gold-soft); opacity: .8; margin: 0 0 .5rem; }
+.credit-name { font-family: var(--serif-display); font-size: clamp(1.3rem, 1.1rem + .8vw, 1.7rem); line-height: 1.35; margin: 0; color: #f3e9d4; }
+.credit-list { list-style: none; margin: 0; padding: 0; font-family: var(--serif-display); font-style: italic; font-size: clamp(1.05rem, .95rem + .5vw, 1.3rem); line-height: 1.7; color: rgba(243,233,212,.86); }
+.credit-block--title .credit-name { font-style: italic; font-size: clamp(2rem, 1.4rem + 2.4vw, 3.2rem); }
+.credit-heart { color: var(--gold); width: 28px; height: 28px; margin: 0 auto; }
+
+/* End card */
+.endcard { position: absolute; inset: 11vh 16px; display: grid; place-content: center; gap: 1.6rem; z-index: 8; opacity: 0; pointer-events: none; transition: opacity 2s var(--ease-soft); }
+.finale[data-step="end"] .endcard { opacity: 1; pointer-events: auto; }
+.endcard__word { font-family: var(--serif-display); font-style: italic; font-weight: 500; font-size: clamp(2.6rem, 1.8rem + 4vw, 5rem); margin: 0; color: #f7e7c6; text-shadow: 0 0 30px rgba(255,220,150,.35); }
+.endcard .actions { margin-top: 0; }
+.endcard .btn--ghost { --b-fg: var(--on-dark); border-color: var(--glass-line); background: var(--glass); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+
+.skip {
+  position: fixed; top: calc(11vh + 14px); right: 16px; z-index: 30;
+  appearance: none; cursor: pointer; border: 1px solid var(--glass-line); background: var(--glass); color: var(--on-dark-soft);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  font-family: var(--ui); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
+  padding: .5rem .95rem; border-radius: 999px; transition: opacity .6s, color .2s;
+}
+.skip:hover { color: var(--on-dark); }
+.finale[data-step="end"] ~ .skip, .skip[hidden] { opacity: 0; pointer-events: none; }
+
+/* Reduced motion: no film, just the final frame and the credits as a list */
+@media (prefers-reduced-motion: reduce) {
+  .finale-page .scene__far, .finale-page .scene__near { transition: none; }
+  .credits { position: static; opacity: 1; -webkit-mask: none; mask: none; }
+  .credits__roll { position: static; animation: none !important; }
+}
+:is(.finale.is-static, html:not(.js) .finale) { position: relative; min-height: 100svh; padding: 13vh 16px; display: block; overflow: auto; }
+:is(.finale.is-static, html:not(.js) .finale) .letterbox, :is(.finale.is-static, html:not(.js) .finale) .grain, :is(.finale.is-static, html:not(.js) .finale) #finale-canvas { display: none; }
+:is(.finale.is-static, html:not(.js) .finale) .finale__layer, :is(.finale.is-static, html:not(.js) .finale) .credits, :is(.finale.is-static, html:not(.js) .finale) .endcard { position: static; opacity: 1; inset: auto; margin-bottom: 3rem; pointer-events: auto; }
+:is(.finale.is-static, html:not(.js) .finale) .finale__title, :is(.finale.is-static, html:not(.js) .finale) .finale__ded, :is(.finale.is-static, html:not(.js) .finale) .finale__quote { opacity: 1; transform: none; filter: none; }
+:is(.finale.is-static, html:not(.js) .finale) .credits__roll { position: static; animation: none; }
+:is(.finale.is-static, html:not(.js) .finale)::before { display: none; }
+.finale-page.is-static-page { overflow: auto; }
+html:not(.js) .finale-page { overflow: auto; }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>(function(d){d.classList.add('js');var t=null;try{var q=new URLSearchParams(location.search).get('time');if(q==='auto')sessionStorage.removeItem('ain:time');else if(q)sessionStorage.setItem('ain:time',q);t=sessionStorage.getItem('ain:time')}catch(e){}if(!/^(dawn|day|dusk|night)$/.test(t||'')){var n=new Date(),h=n.getHours()+n.getMinutes()/60;t=h>=5&&h<7?'dawn':h>=7&&h<17?'day':h>=17&&h<19.5?'dusk':'night'}d.setAttribute('data-time',t)})(document.documentElement)</script>
   <title>7. Inside Jokes &amp; Coded Language — For Ain</title>
   <meta name="description" content="Verses for Ain — small poems, gently told.">
   <meta name="theme-color" content="#07100b">
@@ -21,8 +21,15 @@
 </head>
 <body class="is-reading" data-root="../../" data-page="poetry-book/poems/poem7.html" data-title="VII. Inside Jokes &amp; Coded Language">
   <a class="skip-link" href="#main">Skip to the letter</a>
-  <div class="backdrop" aria-hidden="true"><div class="backdrop__img"></div></div>
-  <canvas id="fireflies" aria-hidden="true"></canvas>
+  <div class="scene" aria-hidden="true">
+    <div class="scene__layer scene__far"><div class="scene__photo"></div><div class="scene__sky"><canvas class="scene__stars"></canvas><div class="scene__moon"></div></div></div>
+    <div class="scene__rays"></div>
+    <div class="scene__mist scene__mist--a"></div>
+    <div class="scene__mist scene__mist--b"></div>
+    <div class="scene__layer scene__near"></div>
+    <div class="scene__grade"></div>
+  </div>
+  <canvas id="particles" aria-hidden="true"></canvas>
   <div class="progress" aria-hidden="true"></div>
   <nav class="topbar" aria-label="Primary">
     <a href="../../index.html">Home</a>
@@ -47,12 +54,13 @@
       </div>
       <div class="pager">
         <a class="btn btn--ghost btn--small" href="poem6.html" rel="prev"><span class="arrow arrow--l" aria-hidden="true">←</span>VI</a>
-        <a class="btn btn--ghost btn--small" href="../index.html"><span class="arrow arrow--l" aria-hidden="true">←</span>Contents</a>
+        <a class="btn btn--ghost btn--small" href="../index.html#contents"><span class="arrow arrow--l" aria-hidden="true">←</span>Contents</a>
         <a class="btn btn--small" href="poem8.html" rel="next">VIII<span class="arrow arrow--r" aria-hidden="true">→</span></a>
       </div>
       <p class="poem-index">7 / 10<span class="keys"> · use <kbd>←</kbd> <kbd>→</kbd> to turn the page</span></p>
     </article>
   </main>
+  <script src="../../assets/js/scene.js"></script>
   <script src="../../assets/js/site.js"></script>
 </body>
 </html>

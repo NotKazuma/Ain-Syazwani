@@ -56,59 +56,6 @@
   if (get(local, 'ain:focus') === '1') setFocus(true);
   if (focusBtn) focusBtn.addEventListener('click', function () { setFocus(!body.classList.contains('focus-mode')); });
 
-  /* ---------- Fireflies ------------------------------------------------------ */
-  (function fireflies() {
-    var c = $('#fireflies');
-    if (!c || RM || !c.getContext) return;
-    var ctx = c.getContext('2d');
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var flies = [], W = 0, H = 0, raf = 0;
-    function resize() {
-      W = c.clientWidth; H = c.clientHeight;
-      c.width = W * dpr; c.height = H * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.round(Math.min(46, Math.max(14, (W * H) / 32000)));
-      flies = [];
-      for (var i = 0; i < n; i++) flies.push(spawn(true));
-    }
-    function spawn(anywhere) {
-      return {
-        x: Math.random() * W,
-        y: anywhere ? Math.random() * H : H + 10,
-        r: 1 + Math.random() * 1.8,
-        vx: (Math.random() - .5) * .25,
-        vy: -(.08 + Math.random() * .25),
-        t: Math.random() * Math.PI * 2,
-        s: .008 + Math.random() * .02
-      };
-    }
-    function frame() {
-      ctx.clearRect(0, 0, W, H);
-      ctx.globalCompositeOperation = 'lighter';
-      for (var i = 0; i < flies.length; i++) {
-        var f = flies[i];
-        f.t += f.s;
-        f.x += f.vx + Math.sin(f.t * 1.3) * .22;
-        f.y += f.vy + Math.cos(f.t) * .12;
-        if (f.y < -12 || f.x < -12 || f.x > W + 12) flies[i] = f = spawn(false);
-        var a = .25 + .75 * Math.pow(Math.max(0, Math.sin(f.t * 2)), 3);
-        var g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 7);
-        g.addColorStop(0, 'rgba(255,236,170,' + (a * .95) + ')');
-        g.addColorStop(.25, 'rgba(231,207,120,' + (a * .35) + ')');
-        g.addColorStop(1, 'rgba(231,207,120,0)');
-        ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(f.x, f.y, f.r * 7, 0, Math.PI * 2); ctx.fill();
-      }
-      raf = requestAnimationFrame(frame);
-    }
-    resize();
-    window.addEventListener('resize', function () { cancelAnimationFrame(raf); resize(); raf = requestAnimationFrame(frame); });
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(frame);
-    });
-    raf = requestAnimationFrame(frame);
-  })();
-
   /* ---------- Reveal on scroll ------------------------------------------------ */
   (function reveal() {
     $$('.poem .stanza').forEach(function (st) {

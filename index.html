@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>(function(d){d.classList.add('js');var t=null;try{var q=new URLSearchParams(location.search).get('time');if(q==='auto')sessionStorage.removeItem('ain:time');else if(q)sessionStorage.setItem('ain:time',q);t=sessionStorage.getItem('ain:time')}catch(e){}if(!/^(dawn|day|dusk|night)$/.test(t||'')){var n=new Date(),h=n.getHours()+n.getMinutes()/60;t=h>=5&&h<7?'dawn':h>=7&&h<17?'day':h>=17&&h<19.5?'dusk':'night'}d.setAttribute('data-time',t)})(document.documentElement)</script>
   <title>A Letter for Ain</title>
   <meta name="description" content="A letter for Ain — words from my heart to yours. A quiet place for a confession and poems.">
   <meta name="theme-color" content="#07100b">
@@ -21,8 +21,15 @@
 </head>
 <body class="home" data-root="" data-page="home" data-title="">
   <a class="skip-link" href="#main">Skip to the letter</a>
-  <div class="backdrop" aria-hidden="true"><div class="backdrop__img"></div></div>
-  <canvas id="fireflies" aria-hidden="true"></canvas>
+  <div class="scene" aria-hidden="true">
+    <div class="scene__layer scene__far"><div class="scene__photo"></div><div class="scene__sky"><canvas class="scene__stars"></canvas><div class="scene__moon"></div></div></div>
+    <div class="scene__rays"></div>
+    <div class="scene__mist scene__mist--a"></div>
+    <div class="scene__mist scene__mist--b"></div>
+    <div class="scene__layer scene__near"></div>
+    <div class="scene__grade"></div>
+  </div>
+  <canvas id="particles" aria-hidden="true"></canvas>
   <main id="main" class="stage">
     <div class="home-scene">
       <div class="envelope-wrap">
@@ -50,6 +57,7 @@
     <p class="credit">Written by Muhammad Afif Aiman for Nur Ain Syazwani</p>
   </main>
   <a id="bookmark" class="bookmark" href="#" hidden><span aria-hidden="true">↺</span> Continue: <span class="bookmark__label">where you left</span></a>
+  <script src="assets/js/scene.js"></script>
   <script src="assets/js/site.js"></script>
 </body>
 </html>

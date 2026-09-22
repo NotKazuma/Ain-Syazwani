@@ -87,42 +87,135 @@ a { color: inherit; }
 }
 .skip-link:focus { top: 1rem; }
 
-/* 3. Forest backdrop -------------------------------------------------------- */
-.backdrop {
+/* 3. Living forest --------------------------------------------------------- */
+/* Layers, back to front: photo (+ night sky through the canopy gaps), light
+   rays, mist, foreground trees, colour grade. JS feeds --px/--py (-1..1) from
+   the mouse or phone tilt; html[data-time] picks dawn / day / dusk / night. */
+.scene {
+  --px: 0; --py: 0;
   position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
   background: var(--forest-900);
 }
-.backdrop__img {
-  position: absolute; inset: -4%;
+.scene__layer { position: absolute; will-change: transform; }
+.scene__far {
+  inset: -5%;
+  transform: translate3d(calc(var(--px) * -14px), calc(var(--py) * -8px), 0) scale(1.02);
+  transition: filter .8s var(--ease-soft);
+}
+.scene__photo, .scene__sky {
+  position: absolute; inset: 0;
+  animation: drift 50s var(--ease-soft) infinite alternate;
+}
+.scene__photo {
   background-image: url("../img/forest-1100.webp");
   background-image: image-set(url("../img/forest-1100.webp") 1x, url("../img/forest-1920.webp") 2x);
   background-size: cover; background-position: 50% 60%;
-  filter: saturate(.85) brightness(.62);
-  transform: scale(1.04);
-  animation: drift 40s var(--ease-soft) infinite alternate;
+  filter: var(--photo-filter, saturate(.85) brightness(.62));
+  transition: filter 1.2s var(--ease-soft);
 }
-@media (min-width: 1100px) {
-  .backdrop__img { background-image: url("../img/forest-1920.webp"); }
+@media (min-width: 1100px) { .scene__photo { background-image: url("../img/forest-1920.webp"); } }
+/* Night sky, visible only where the canopy opens (mask made from the photo) */
+.scene__sky {
+  opacity: 0; transition: opacity 1.2s var(--ease-soft);
+  background: linear-gradient(to bottom, #0a1633, #14254a 60%, #1d2f55);
+  -webkit-mask: url("../img/sky-mask.webp") 50% 60% / cover no-repeat;
+  mask: url("../img/sky-mask.webp") 50% 60% / cover no-repeat;
 }
-.backdrop::after {
-  content: ""; position: absolute; inset: 0;
+.scene__stars { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene__moon {
+  position: absolute; left: 36%; top: 9%; width: 70px; height: 70px; border-radius: 50%;
+  background: radial-gradient(circle at 42% 40%, #fffdf2, #f1e6c6 55%, #d8c99f 100%);
+  box-shadow: 0 0 40px 10px rgba(255,248,220,.45), 0 0 140px 40px rgba(190,210,255,.25);
+}
+.scene__rays {
+  position: absolute; inset: -20% -10% 10% -10%;
   background:
-    radial-gradient(120% 80% at 50% 110%, rgba(201,161,91,.16), transparent 55%),
-    radial-gradient(90% 70% at 50% 40%, transparent 30%, rgba(4,10,6,.75) 100%),
-    linear-gradient(to bottom, rgba(7,16,11,.35), rgba(7,16,11,.15) 40%, rgba(7,16,11,.7));
+    repeating-linear-gradient(105deg, transparent 0 60px, var(--ray, rgba(255,232,170,.10)) 90px, transparent 140px, transparent 190px, var(--ray, rgba(255,232,170,.10)) 205px, transparent 240px);
+  -webkit-mask: radial-gradient(70% 80% at 36% 0%, #000 0%, rgba(0,0,0,.5) 45%, transparent 75%);
+  mask: radial-gradient(70% 80% at 36% 0%, #000 0%, rgba(0,0,0,.5) 45%, transparent 75%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  opacity: var(--rays, .8);
+  transform: translate3d(calc(var(--px) * -24px), 0, 0) skewX(-6deg);
+  animation: shimmer 9s ease-in-out infinite alternate;
+  transition: opacity 1.2s var(--ease-soft);
 }
-/* Reading pages: calmer, darker, softly out of focus behind the paper */
-.is-reading .backdrop__img { filter: saturate(.7) brightness(.42) blur(2px); }
-#fireflies { position: fixed; inset: 0; z-index: 1; pointer-events: none; width: 100%; height: 100%; }
+.scene__mist {
+  position: absolute; left: -30%; right: -30%; height: 42%;
+  background:
+    radial-gradient(40% 50% at 25% 60%, var(--mist, rgba(210,225,210,.16)), transparent 70%),
+    radial-gradient(35% 45% at 70% 50%, var(--mist, rgba(210,225,210,.16)), transparent 70%);
+  filter: blur(20px);
+  opacity: var(--mist-o, .8);
+  transition: opacity 1.2s var(--ease-soft);
+}
+.scene__mist--a { bottom: 6%; animation: mist 70s linear infinite alternate; transform: translate3d(calc(var(--px) * -30px), 0, 0); }
+.scene__mist--b { bottom: -4%; animation: mist 55s linear infinite alternate-reverse; opacity: calc(var(--mist-o, .8) * .8); }
+.scene__near {
+  inset: -7% -9% -4%;
+  background: url("../img/foreground.svg") 50% 100% / cover no-repeat;
+  filter: blur(1.6px) brightness(var(--near-b, 1));
+  transform: translate3d(calc(var(--px) * -46px), calc(var(--py) * -14px), 0);
+}
+.scene__grade {
+  position: absolute; inset: 0;
+  background:
+    var(--grade, linear-gradient(transparent, transparent)),
+    radial-gradient(120% 80% at 50% 110%, var(--ground-glow, rgba(201,161,91,.16)), transparent 55%),
+    radial-gradient(90% 70% at 50% 40%, transparent 30%, rgba(4,10,6,.72) 100%),
+    linear-gradient(to bottom, rgba(7,16,11,.3), rgba(7,16,11,.1) 40%, rgba(7,16,11,.65));
+}
+.scene__grade::after {
+  content: ""; position: absolute; inset: 0; background: #040906; opacity: 0;
+  transition: opacity .8s var(--ease-soft);
+}
+#particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; width: 100%; height: 100%; transition: opacity .8s var(--ease-soft); }
 
-body.focus-mode .backdrop__img { filter: saturate(.3) brightness(.18) blur(6px); }
-body.focus-mode #fireflies { opacity: 0; }
-.backdrop__img, #fireflies { transition: filter .8s var(--ease-soft), opacity .8s var(--ease-soft); }
+/* Times of day */
+html[data-time="dawn"] {
+  --photo-filter: saturate(.75) brightness(.7) hue-rotate(-10deg) contrast(.95);
+  --ray: rgba(255, 205, 190, .10); --rays: .7;
+  --mist: rgba(255, 225, 220, .22); --mist-o: 1;
+  --grade: linear-gradient(to bottom, rgba(255,170,160,.18), rgba(120,110,160,.10) 50%, transparent);
+  --ground-glow: rgba(255,190,170,.14);
+}
+html[data-time="day"] {
+  --photo-filter: saturate(1) brightness(.8);
+  --ray: rgba(255, 244, 200, .13); --rays: 1;
+  --mist: rgba(230, 240, 220, .12); --mist-o: .6;
+  --grade: linear-gradient(to bottom, rgba(255,250,220,.08), transparent 50%);
+}
+html[data-time="dusk"] {
+  --photo-filter: saturate(.95) brightness(.62) sepia(.28);
+  --ray: rgba(255, 180, 90, .14); --rays: .95;
+  --mist: rgba(255, 200, 150, .14); --mist-o: .8;
+  --grade: linear-gradient(to bottom, rgba(255,140,60,.16), rgba(120,40,60,.10) 55%, transparent);
+  --ground-glow: rgba(255,160,80,.2);
+}
+html[data-time="night"] {
+  --photo-filter: saturate(.45) brightness(.3) hue-rotate(18deg);
+  --rays: 0;
+  --mist: rgba(150, 175, 230, .12); --mist-o: .7;
+  --grade: radial-gradient(60% 50% at 38% 8%, rgba(190,210,255,.14), transparent 70%), linear-gradient(to bottom, rgba(20,40,90,.28), rgba(8,14,40,.2));
+  --ground-glow: rgba(120,150,255,.08);
+  --near-b: .7;
+}
+html[data-time="night"] .scene__sky { opacity: 1; }
+html[data-time="night"] .envelope { filter: drop-shadow(0 30px 40px rgba(0,0,0,.6)) brightness(.8) saturate(.85); }
+
+/* Reading pages: the forest steps back behind the paper */
+.is-reading .scene__far { filter: blur(2.5px); }
+.is-reading .scene__near { opacity: .55; }
+.is-reading .scene__grade::after { opacity: .38; }
+body.focus-mode .scene__grade::after { opacity: .82; }
+body.focus-mode #particles { opacity: 0; }
 
 @keyframes drift {
-  from { transform: scale(1.04) translate3d(0, 0, 0); }
-  to   { transform: scale(1.10) translate3d(-1.2%, -1%, 0); }
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to   { transform: scale(1.08) translate3d(-1.2%, -1%, 0); }
 }
+@keyframes shimmer { from { opacity: calc(var(--rays, .8) * .55); } to { opacity: var(--rays, .8); } }
+@keyframes mist { from { translate: -6% 0; } to { translate: 6% 0; } }
 
 /* 4. Top bar --------------------------------------------------------------- */
 .topbar {
@@ -253,6 +346,7 @@ body.focus-mode #fireflies { opacity: 0; }
 }
 .pager > :only-child { margin-left: auto; margin-right: auto; }
 .pager .spacer { flex: 1; }
+.pager__end { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: flex-end; }
 
 .tools { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-top: 2rem; }
 
@@ -548,11 +642,12 @@ body.focus-mode #fireflies { opacity: 0; }
   .topbar a, .topbar button { padding: .4rem .7rem; font-size: .78rem; }
   .pager { flex-wrap: wrap; }
   .pager .btn { flex: 1 1 auto; }
+  .pager__end { flex: 1 1 100%; }
   .quote { font-size: 1.16rem; }
 }
 
 @media print {
-  .backdrop, #fireflies, .topbar, .progress, .tools, .pager, .bookmark { display: none !important; }
+  .scene, #particles, .topbar, .progress, .tools, .pager, .bookmark { display: none !important; }
   body { background: #fff; }
   .paper { box-shadow: none; background: #fff; color: #000; }
 }
