@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Editor — A Letter for Ain</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Lora:wght@400;500&display=swap">
+  <style>
+    :root {
+      --bg: #0e1712; --panel: #16221b; --panel-2: #1d2b23; --line: #2c3f33;
+      --ink: #eee5d3; --ink-soft: #a9b6a6; --gold: #c9a15b; --wax: #8f2430; --ok: #5fa463; --bad: #d4645c;
+      --ui: "Lora", Georgia, serif; --display: "Cormorant Garamond", Georgia, serif;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 16px; line-height: 1.5; }
+    header {
+      position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+      padding: .7rem max(12px, env(safe-area-inset-left)); background: rgba(14,23,18,.94);
+      border-bottom: 1px solid var(--line); backdrop-filter: blur(8px);
+    }
+    h1 { font-family: var(--display); font-style: italic; font-size: 1.5rem; margin: 0; font-weight: 500; }
+    .spacer { flex: 1; }
+    main { padding: 1rem max(12px, env(safe-area-inset-left)) 6rem; max-width: 820px; margin: 0 auto; }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    button { cursor: pointer; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); padding: .5rem 1rem; }
+    button:hover { border-color: var(--gold); }
+    button[disabled] { opacity: .5; cursor: default; }
+    .primary { background: var(--wax); border-color: var(--wax); color: #fbeee6; }
+    .ghost { background: transparent; }
+    .danger { color: var(--bad); }
+    .tiny { padding: .3rem .7rem; font-size: .85rem; }
+    input, textarea {
+      width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+      padding: .6rem .7rem; margin: .25rem 0 0;
+    }
+    textarea { min-height: 7rem; resize: vertical; line-height: 1.6; }
+    input:focus, textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+    label { display: block; margin: 1rem 0 0; font-size: .82rem; letter-spacing: .04em; color: var(--ink-soft); text-transform: uppercase; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 1rem; margin: 1rem 0; }
+    .row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+    .tabs { display: flex; gap: .3rem; overflow-x: auto; padding: .6rem max(12px, env(safe-area-inset-left)); border-bottom: 1px solid var(--line); position: sticky; top: 54px; background: rgba(14,23,18,.94); z-index: 4; }
+    .tabs button { white-space: nowrap; }
+    .tabs button[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: #12180f; }
+    .hint { color: var(--ink-soft); font-size: .86rem; margin: .35rem 0 0; }
+    .status { position: fixed; left: 50%; bottom: 4.6rem; transform: translateX(-50%); z-index: 9;
+      background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: .6rem 1.1rem;
+      opacity: 0; transition: opacity .25s; pointer-events: none; max-width: 92vw; text-align: center; }
+    .status.show { opacity: 1; }
+    .status.ok { border-color: var(--ok); } .status.bad { border-color: var(--bad); }
+    .login { max-width: 420px; margin: 12vh auto; }
+    .muted { color: var(--ink-soft); }
+    .poem-head { display: flex; gap: .5rem; align-items: center; }
+    .poem-head input { flex: 1; margin: 0; }
+    .count { font-family: var(--display); color: var(--gold); min-width: 2.2em; text-align: center; }
+    .savebar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; display: flex; gap: .6rem; align-items: center;
+      padding: .7rem max(12px, env(safe-area-inset-left)) max(.7rem, env(safe-area-inset-bottom));
+      background: rgba(14,23,18,.96); border-top: 1px solid var(--line); }
+    @media (max-width: 520px) { h1 { font-size: 1.25rem; } .tabs { top: 50px; } }
+  </style>
+</head>
+<body>
+
+<div id="login" class="login" hidden>
+  <h1>Editor</h1>
+  <p class="hint">Private. Your words for Ain live behind this password.</p>
+  <div class="card">
+    <label for="api">Editor address</label>
+    <input id="api" type="url" placeholder="https://something.workers.dev" autocomplete="off">
+    <p class="hint">The Cloudflare Worker URL. Saved on this device after the first time.</p>
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password">
+    <div class="row" style="margin-top:1rem">
+      <button class="primary" id="signin">Sign in</button>
+      <span class="hint" id="loginmsg"></span>
+    </div>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <header>
+    <h1>Editor</h1>
+    <span class="spacer"></span>
+    <span class="hint" id="meta"></span>
+    <button class="tiny ghost" id="reload">Reload</button>
+    <button class="tiny ghost" id="signout">Sign out</button>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <main id="panel"></main>
+  <div class="savebar">
+    <button class="primary" id="save">Publish</button>
+    <a class="hint" id="viewsite" href="../index.html" target="_blank" rel="noopener">View site ↗</a>
+    <span class="spacer"></span>
+    <span class="hint" id="dirty"></span>
+  </div>
+</div>
+
+<div class="status" id="status" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'ain:admin';
+  var el = function (id) { return document.getElementById(id); };
+  var state = { api: '', token: '', exp: 0, content: null, tab: 'poems', dirty: false };
+
+  /* ---------- session ---------- */
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+    state.api = saved.api || '';
+    if (saved.token && saved.exp > Date.now()) { state.token = saved.token; state.exp = saved.exp; }
+  } catch (e) {}
+
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify({ api: state.api, token: state.token, exp: state.exp })); } catch (e) {}
+  }
+  function status(msg, kind) {
+    var s = el('status');
+    s.textContent = msg;
+    s.className = 'status show ' + (kind || '');
+    clearTimeout(s._t);
+    s._t = setTimeout(function () { s.className = 'status ' + (kind || ''); }, 3600);
+  }
+  function api(path, opts) {
+    opts = opts || {};
+    var headers = { 'Content-Type': 'application/json' };
+    if (state.token) headers.Authorization = 'Bearer ' + state.token;
+    return fetch(state.api.replace(/\/+$/, '') + path, {
+      method: opts.method || 'GET', headers: headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (data) {
+        if (r.status === 401) { signOut(true); throw new Error(data.error || 'Signed out.'); }
+        if (!r.ok) throw new Error(data.error || ('Error ' + r.status));
+        return data;
+      });
+    });
+  }
+
+  /* ---------- login ---------- */
+  function showLogin(msg) {
+    el('app').hidden = true; el('login').hidden = false;
+    el('api').value = state.api;
+    el('loginmsg').textContent = msg || '';
+    (state.api ? el('pw') : el('api')).focus();
+  }
+  function signOut(quiet) {
+    state.token = ''; state.exp = 0; persist();
+    showLogin(quiet ? 'Session expired — sign in again.' : '');
+  }
+  el('signin').addEventListener('click', function () {
+    state.api = el('api').value.trim();
+    var localhost = /^http:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(state.api);
+    if (!/^https:\/\//.test(state.api) && !localhost) return (el('loginmsg').textContent = 'Address must start with https://');
+    el('signin').disabled = true;
+    el('loginmsg').textContent = 'Checking…';
+    api('/login', { method: 'POST', body: { password: el('pw').value } })
+      .then(function (d) {
+        state.token = d.token; state.exp = d.exp; persist();
+        el('pw').value = '';
+        start();
+      })
+      .catch(function (err) { el('loginmsg').textContent = err.message; })
+      .then(function () { el('signin').disabled = false; });
+  });
+  el('pw').addEventListener('keydown', function (e) { if (e.key === 'Enter') el('signin').click(); });
+  el('signout').addEventListener('click', function () { signOut(false); });
+  el('reload').addEventListener('click', function () { load(true); });
+
+  /* ---------- load ---------- */
+  function start() {
+    el('login').hidden = true; el('app').hidden = false;
+    load(false);
+  }
+  function load(force) {
+    status('Loading…');
+    api('/content').then(function (c) {
+      state.content = normalise(c);
+      state.dirty = false;
+      renderTabs(); render();
+      el('meta').textContent = 'v' + (c.version || 0) + (c.updatedAt ? ' · ' + new Date(c.updatedAt).toLocaleString() : '');
+      status('Loaded', 'ok');
+    }).catch(function (e) { status(e.message, 'bad'); });
+  }
+  function normalise(c) {
+    c = c || {};
+    c.fields = c.fields || {};
+    c.poems = c.poems || [];
+    c.apologyPoems = c.apologyPoems || [];
+    c.quotes = c.quotes || {};
+    return c;
+  }
+  function markDirty() { state.dirty = true; el('dirty').textContent = 'Unsaved changes'; }
+
+  /* ---------- tabs ---------- */
+  var TABS = [
+    { id: 'poems', name: 'Poems' },
+    { id: 'apology', name: 'Apology' },
+    { id: 'letter', name: 'Letter' },
+    { id: 'quotes', name: 'Quotes' },
+    { id: 'titles', name: 'Titles & intros' },
+  ];
+  function renderTabs() {
+    var nav = el('tabs');
+    nav.textContent = '';
+    TABS.forEach(function (t) {
+      var b = document.createElement('button');
+      b.textContent = t.name;
+      b.setAttribute('aria-selected', String(state.tab === t.id));
+      b.addEventListener('click', function () { state.tab = t.id; renderTabs(); render(); window.scrollTo(0, 0); });
+      nav.appendChild(b);
+    });
+  }
+
+  /* ---------- editors ---------- */
+  function stanzasToText(stanzas) {
+    return (stanzas || []).map(function (st) { return st.join('\n'); }).join('\n\n');
+  }
+  function textToStanzas(text) {
+    return String(text).split(/\n{2,}/).map(function (chunk) {
+      return chunk.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+    }).filter(function (st) { return st.length; });
+  }
+  function poemCard(list, i, label) {
+    var poem = list[i];
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    var head = document.createElement('div');
+    head.className = 'poem-head';
+    var num = document.createElement('span'); num.className = 'count'; num.textContent = (i + 1);
+    var title = document.createElement('input');
+    title.value = poem.title || ''; title.placeholder = 'Poem title';
+    title.addEventListener('input', function () { poem.title = title.value; markDirty(); });
+    head.appendChild(num); head.appendChild(title);
+    card.appendChild(head);
+
+    var ta = document.createElement('textarea');
+    ta.value = stanzasToText(poem.stanzas);
+    ta.rows = Math.min(20, Math.max(6, ta.value.split('\n').length + 1));
+    ta.addEventListener('input', function () { poem.stanzas = textToStanzas(ta.value); markDirty(); });
+    card.appendChild(ta);
+
+    var hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.textContent = 'One line per line. Leave a blank line between stanzas.';
+    card.appendChild(hint);
+
+    var row = document.createElement('div');
+    row.className = 'row';
+    row.style.marginTop = '.6rem';
+    [['↑ Up', function () { if (i > 0) { list.splice(i - 1, 0, list.splice(i, 1)[0]); markDirty(); render(); } }],
+     ['↓ Down', function () { if (i < list.length - 1) { list.splice(i + 1, 0, list.splice(i, 1)[0]); markDirty(); render(); } }],
+     ['Delete', function () {
+        if (confirm('Delete "' + (poem.title || 'this poem') + '"? This can\'t be undone once you publish.')) {
+          list.splice(i, 1); markDirty(); render();
+        }
+      }, 'danger']].forEach(function (b) {
+      var btn = document.createElement('button');
+      btn.className = 'tiny ghost ' + (b[2] || '');
+      btn.textContent = b[0];
+      btn.addEventListener('click', b[1]);
+      row.appendChild(btn);
+    });
+    if (poem.page) {
+      var tag = document.createElement('span');
+      tag.className = 'hint';
+      tag.textContent = 'also has its own page';
+      row.appendChild(tag);
+    }
+    card.appendChild(row);
+    return card;
+  }
+  function poemList(list, addLabel, mk) {
+    var wrap = document.createElement('div');
+    list.forEach(function (_, i) { wrap.appendChild(poemCard(list, i)); });
+    var add = document.createElement('button');
+    add.className = 'primary';
+    add.textContent = addLabel;
+    add.addEventListener('click', function () {
+      list.push(mk());
+      markDirty(); render();
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    wrap.appendChild(add);
+    return wrap;
+  }
+  function fieldBlock(keys, titles) {
+    var wrap = document.createElement('div');
+    keys.forEach(function (key) {
+      var val = state.content.fields[key];
+      if (typeof val !== 'string') return;
+      var card = document.createElement('div'); card.className = 'card';
+      var lab = document.createElement('label'); lab.textContent = titles[key] || key; lab.style.marginTop = '0';
+      card.appendChild(lab);
+      var multi = val.indexOf('\n') > -1 || val.length > 90;
+      var input = document.createElement(multi ? 'textarea' : 'input');
+      input.value = val;
+      if (multi) input.rows = Math.min(16, Math.max(3, val.split('\n').length + 1));
+      input.addEventListener('input', function () { state.content.fields[key] = input.value; markDirty(); });
+      card.appendChild(input);
+      wrap.appendChild(card);
+    });
+    return wrap;
+  }
+  function quoteBlock(name, label) {
+    var card = document.createElement('div'); card.className = 'card';
+    var lab = document.createElement('label'); lab.textContent = label; lab.style.marginTop = '0';
+    var ta = document.createElement('textarea');
+    ta.value = (state.content.quotes[name] || []).join('\n');
+    ta.rows = Math.min(20, Math.max(5, (state.content.quotes[name] || []).length + 1));
+    ta.addEventListener('input', function () {
+      state.content.quotes[name] = ta.value.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+      markDirty();
+    });
+    var hint = document.createElement('p'); hint.className = 'hint'; hint.textContent = 'One quote per line.';
+    card.appendChild(lab); card.appendChild(ta); card.appendChild(hint);
+    return card;
+  }
+
+  var LABELS = {
+    'home.title': 'Home — title', 'home.dedication': 'Home — line under the title', 'home.credit': 'Home — credit line',
+    'book.title': 'Poetry book — cover title', 'book.dedication': 'Poetry book — dedication',
+    'book.note': 'Poetry book — note under the dedication', 'book.contents': 'Poetry book — “Contents” heading',
+    'book.others': 'Poetry book — “Words from Others” heading',
+    'apology.title': 'Apology — title', 'apology.intro': 'Apology — intro', 'apology.closing': 'Apology — closing line',
+    'letter.cover.title': 'Chapter I — title', 'letter.cover.dedication': 'Chapter I — dedication',
+    'letter.intro.title': 'Chapter II — title', 'letter.intro.body': 'Chapter II — words',
+    'letter.question.title': 'Chapter III — title', 'letter.question.lead': 'Chapter III — opening lines',
+    'letter.question.ask': 'Chapter III — the question', 'letter.question.yes': 'Chapter III — “yes” button',
+    'letter.question.no': 'Chapter III — “no” button',
+    'letter.next.title': 'Chapter IV — title', 'letter.next.body': 'Chapter IV — words',
+    'letter.poem.title': 'Chapter V — title', 'letter.quotes.title': 'Chapter VI — title',
+    'letter.quotes.lead': 'Chapter VI — opening line',
+  };
+
+  function render() {
+    var panel = el('panel');
+    panel.textContent = '';
+    if (!state.content) return;
+    var c = state.content;
+
+    if (state.tab === 'poems') {
+      panel.appendChild(intro('The poems in Verses for You. Their numbers follow this order.'));
+      panel.appendChild(poemList(c.poems, '+ Add a poem', function () {
+        return { id: 'poem-' + (Date.now().toString(36)), title: 'Untitled', stanzas: [['']] };
+      }));
+    } else if (state.tab === 'apology') {
+      panel.appendChild(intro('The poems on the I’m Sorry page.'));
+      panel.appendChild(poemList(c.apologyPoems, '+ Add a poem', function () {
+        return { title: 'Untitled', stanzas: [['']] };
+      }));
+    } else if (state.tab === 'letter') {
+      panel.appendChild(intro('The six chapters of the letter. Leave a blank line between paragraphs.'));
+      panel.appendChild(fieldBlock(Object.keys(c.fields).filter(function (k) { return k.indexOf('letter.') === 0; }), LABELS));
+      var card = document.createElement('div'); card.className = 'card';
+      var lab = document.createElement('label'); lab.textContent = 'Chapter V — the poem'; lab.style.marginTop = '0';
+      var ta = document.createElement('textarea');
+      ta.value = stanzasToText(c.fields['letter.poem.stanzas'] || []);
+      ta.rows = 14;
+      ta.addEventListener('input', function () { c.fields['letter.poem.stanzas'] = textToStanzas(ta.value); markDirty(); });
+      card.appendChild(lab); card.appendChild(ta);
+      panel.appendChild(card);
+    } else if (state.tab === 'quotes') {
+      panel.appendChild(intro('Short lines shown as cards.'));
+      panel.appendChild(quoteBlock('heart', 'Words from My Heart (the last one is highlighted)'));
+      panel.appendChild(quoteBlock('others', 'Words from Others'));
+    } else {
+      panel.appendChild(intro('Titles and short pieces of text around the site.'));
+      panel.appendChild(fieldBlock(Object.keys(c.fields).filter(function (k) {
+        return k.indexOf('letter.') !== 0;
+      }), LABELS));
+    }
+  }
+  function intro(text) {
+    var p = document.createElement('p');
+    p.className = 'hint';
+    p.textContent = text;
+    return p;
+  }
+
+  /* ---------- publish ---------- */
+  el('save').addEventListener('click', function () {
+    if (!state.content) return;
+    el('save').disabled = true;
+    status('Publishing…');
+    api('/content', { method: 'PUT', body: state.content }).then(function (r) {
+      state.dirty = false;
+      el('dirty').textContent = '';
+      el('meta').textContent = 'v' + r.version + ' · just now';
+      status(r.published ? 'Published ✓ the site updates in about a minute' : ('Saved, but not published: ' + (r.error || '')), r.published ? 'ok' : 'bad');
+    }).catch(function (e) { status(e.message, 'bad'); })
+      .then(function () { el('save').disabled = false; });
+  });
+  window.addEventListener('beforeunload', function (e) {
+    if (state.dirty) { e.preventDefault(); e.returnValue = ''; }
+  });
+
+  /* ---------- go ---------- */
+  if (state.token) start(); else showLogin('');
+})();
+</script>
+</body>
+</html>

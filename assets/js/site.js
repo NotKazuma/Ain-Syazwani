@@ -57,7 +57,9 @@
   if (focusBtn) focusBtn.addEventListener('click', function () { setFocus(!body.classList.contains('focus-mode')); });
 
   /* ---------- Reveal on scroll ------------------------------------------------ */
-  (function reveal() {
+  window.AinReveal = reveal;
+  reveal();
+  function reveal() {
     $$('.poem .stanza').forEach(function (st) {
       $$('.ln', st).forEach(function (ln, i) { ln.style.setProperty('--d', (i * 0.12) + 's'); });
     });
@@ -77,7 +79,7 @@
         if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('is-in');
       });
     }, 1800);
-  })();
+  }
 
   /* ---------- Bookmark: remember the last reading page ---------------------- */
   var here = body.getAttribute('data-page');

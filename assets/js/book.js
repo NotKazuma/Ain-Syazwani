@@ -21,6 +21,13 @@
 
   var leaves = [], single = false, flipped = 0, maxFlip = 0, pw = 0, ph = 0;
 
+  function refreshFaces() {
+    faces = Array.prototype.slice.call(source.querySelectorAll(':scope > .face')).map(function (f) {
+      return { id: f.id, kind: f.getAttribute('data-kind') || 'page', label: f.getAttribute('data-label') || '',
+        num: f.getAttribute('data-num'), content: f.querySelector('.page-in') };
+    });
+  }
+
   /* ---------- Build ------------------------------------------------------------ */
   function side(face, which) {
     var s = document.createElement('div');
@@ -258,6 +265,7 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
 
   /* ---------- Go ------------------------------------------------------------------- */
+  function boot() {
   var start = 0;
   if (location.hash) { var hi = indexOf(location.hash.slice(1)); if (hi >= 0) start = hi; }
   build(start);
@@ -277,4 +285,8 @@
     var i = indexOf(location.hash.slice(1));
     if (i >= 0) goTo(i);
   });
+  }
+  // cms.js may rewrite the pages first; it calls boot() when it's done.
+  window.AinBook = { boot: function () { refreshFaces(); boot(); } };
+  if (!window.AinCMSPending) window.AinBook.boot();
 })();

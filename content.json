@@ -1,0 +1,412 @@
+{
+ "version": 1,
+ "updatedAt": null,
+ "fields": {
+  "home.title": "A Letter for Ain",
+  "home.dedication": "Words from my heart to yours",
+  "home.credit": "Written by Muhammad Afif Aiman for Nur Ain Syazwani",
+  "letter.cover.title": "My Confession to You",
+  "letter.cover.dedication": "To Ain, who holds the key to my heart",
+  "letter.intro.title": "A Few Words First",
+  "letter.intro.body": "Hello, it's Afif here. Let me share something with you. My full name is Muhammad Afif Aiman. For now, that's what matters most. I know this may seem unusual, but I wanted to create something genuine. Something that comes from the heart. Making things for someone special feels more meaningful than anything else. That's all I wanted to say for now. Let's continue...",
+  "letter.question.title": "The Question",
+  "letter.question.lead": "Here we are. You know why I made this. It's a confession from me to you.",
+  "letter.question.ask": "Will you walk this journey with me?",
+  "letter.question.yes": "Yes, I will ❤️",
+  "letter.question.no": "No, thank you",
+  "letter.next.title": "What Comes Next",
+  "letter.next.body": "And here we are. You said yes! I know this might feel a bit unexpected, but sometimes the best moments come from surprises. I don't have long speeches prepared, but I truly hope this journey brings out the best in both of us. We can learn from each other, grow together, and build something meaningful. The next page contains a poem I wrote specially for you. I hope you like it.",
+  "letter.poem.title": "Our First Chapter",
+  "letter.poem.stanzas": [
+   [
+    "I haven't discovered all of you yet,",
+    "and perhaps that's what makes this beautiful."
+   ],
+   [
+    "You're not from my yesterday,",
+    "not someone I'm trying to fix —",
+    "you're something new,",
+    "someone I want to understand",
+    "from the very first page."
+   ],
+   [
+    "I won't claim to be flawless,",
+    "or that I'll get everything right."
+   ],
+   [
+    "But I want to try —",
+    "to learn you,",
+    "to care for you,",
+    "to build something genuine",
+    "without rushing what we're becoming."
+   ],
+   [
+    "I'm not here out of routine.",
+    "I'm here because I picked you."
+   ],
+   [
+    "And in this opening chapter,",
+    "still being written…"
+   ],
+   [
+    "I'll do my best",
+    "to bring you joy,",
+    "one step at a time,",
+    "with nothing from the past weighing us down."
+   ]
+  ],
+  "letter.quotes.title": "Words from My Heart",
+  "letter.quotes.lead": "These lines capture what I feel for you – honest thoughts from deep within.",
+  "book.title": "Verses for You",
+  "book.dedication": "To Nur Ain Syazwani —\nthese lines belong to you.",
+  "book.note": "You reminded me why words matter.",
+  "book.contents": "Contents",
+  "book.others": "Words from Others",
+  "apology.title": "I'm Sorry",
+  "apology.intro": "This part is harder to write than the rest. Not every page can be about the good moments — some have to be about the times I let you down.\n\nSo here it is, plainly, without dressing it up: I'm sorry. These are the words I owe you.",
+  "apology.closing": "If you're still reading this far, thank you for giving me the chance to say it."
+ },
+ "poems": [
+  {
+   "id": "poem-1",
+   "title": "The Sudden Shift",
+   "stanzas": [
+    [
+     "It’s strange how quickly a story line can bend,",
+     "How a simple contact name stops being “just a friend.”",
+     "Yesterday you were just another thought passing through my head,",
+     "Now your morning message is the very first thing I read."
+    ],
+    [
+     "There were no dramatic movie scenes, no light up in the sky,",
+     "Just a sudden realization of how fast the hours fly",
+     "Whenever you’re around, or when your name pops on my screen,",
+     "Flipping every single ordinary moment in between."
+    ],
+    [
+     "I used to move through daily routines without a second thought,",
+     "Now I'm tangled up in every little moment that you caught.",
+     "It’s a brand new baseline, a total shift in how I view my day,",
+     "And honestly, I wouldn't have it any other way."
+    ]
+   ],
+   "page": "poems/poem1.html"
+  },
+  {
+   "id": "poem-2",
+   "title": "Early Days & Car Park Conversations",
+   "stanzas": [
+    [
+     "We’re still figuring out the exact mechanics of how this fits,",
+     "Navigating the quiet moments and the awkward little bits.",
+     "Learning which of my dumb jokes land and which ones hit the wall,",
+     "Trying to figure out the right time for a late-night call."
+    ],
+    [
+     "Sitting parked in the car for hours after driving you back home,",
+     "Talking about absolute nonsense, neither reaching for a phone.",
+     "The engine's turned off, the dashboard lights are fading low,",
+     "And neither one of us is in a hurry to get up and go."
+    ],
+    [
+     "It’s unwritten, it’s brand new, it’s slightly clumsy at the start,",
+     "But watching it unfold is the most exciting part.",
+     "We’re building a foundation out of simple, quiet nights,",
+     "Just two people getting it right beneath the streetlights."
+    ]
+   ],
+   "page": "poems/poem2.html"
+  },
+  {
+   "id": "poem-3",
+   "title": "Overthinking the Unsent Text",
+   "stanzas": [
+    [
+     "I catch myself overthinking every single thing I send,",
+     "Typing out a paragraph, erasing it, changing the end.",
+     "Trying so hard to play it cool and keep a steady pace,",
+     "While secretly just counting down the hours till I see your face."
+    ],
+    [
+     "Do I send a double text or wait for you to reply?",
+     "Why am I acting like a amateur, over-analyzing why?",
+     "It’s hilarious, it’s exhausting, but it’s real as it can be—",
+     "This ridiculous, amazing phase of letting someone in to see."
+    ],
+    [
+     "I drop the cool facade the second your message lights up bright,",
+     "Realizing all that overthinking wasn't worth the fight.",
+     "It's just us figuring it out, one draft at a time,",
+     "Finding the balance in this brand new rhythm and rhyme."
+    ]
+   ],
+   "page": "poems/poem3.html"
+  },
+  {
+   "id": "poem-4",
+   "title": "The Notification High",
+   "stanzas": [
+    [
+     "My phone lies on the desk, face down while I try to work,",
+     "Every minor vibration turns me into a watchful jerk.",
+     "I glance over immediately, hoping it’s your name appearing,",
+     "Cutting through the busy noise and everything I’m hearing."
+    ],
+    [
+     "It’s crazy how a simple three-word line sent on the fly",
+     "Can completely change my mood and raise my spirits high.",
+     "A random photo of your lunch, a quick meme out of nowhere,",
+     "Just a subtle little reminder that you’re sitting over there."
+    ],
+    [
+     "It brightens up the heavy hours, turns the grey into clear blue,",
+     "Proving how easily my whole day turns around because of you.",
+     "Not over-the-top, just a steady, subtle little spark,",
+     "A tiny little lantern cutting straight through the dark."
+    ]
+   ],
+   "page": "poems/poem4.html"
+  },
+  {
+   "id": "poem-5",
+   "title": "Small Talks & Unfiltered Hours",
+   "stanzas": [
+    [
+     "We spend hours talking about nothing—our days, our food,",
+     "The silly little random things that put us in a mood.",
+     "We don’t need deep philosophical debates or poetic prose,",
+     "It’s just easy, unscripted, and that’s how the evening goes."
+    ],
+    [
+     "I don’t have to keep up a performance or put on a show,",
+     "I can just sit back, relax, and let the real version show.",
+     "Messy hair, tired eyes, and stories from work that drag on long,",
+     "Yet with you listening on the line, nothing feels out of song."
+    ],
+    [
+     "We’re stripping away the polished surface people usually display,",
+     "Finding comfort in the casual things we choose to say.",
+     "Building something genuine out of everyday background noise,",
+     "Finding our natural cadence, finding our shared voice."
+    ]
+   ],
+   "page": "poems/poem5.html"
+  },
+  {
+   "id": "poem-6",
+   "title": "The Butterfly Phase",
+   "stanzas": [
+    [
+     "That sudden, nervous flutter right before we’re set to meet,",
+     "Walking side by side down an ordinary, crowded street.",
+     "My hands are in my pockets, wondering if I should reach out,",
+     "Hoping I’m making sense, hoping I don’t give you reason to doubt."
+    ],
+    [
+     "Every time our shoulders bump, my brain goes momentarily blank,",
+     "Forgetting what I was saying, losing track of my own bank",
+     "Of thoughts and clever lines I spent all afternoon preparing,",
+     "Replaced by the sheer distraction of the glance that you’re sharing."
+    ],
+    [
+     "It’s the butterfly phase—clumsy, raw, and slightly out of control,",
+     "The kind of good nervousness that takes over your entire soul.",
+     "A little bit chaotic, but the sweetest kind of rush,",
+     "Hiding a ridiculous grin behind a sudden, simple blush."
+    ]
+   ],
+   "page": "poems/poem6.html"
+  },
+  {
+   "id": "poem-7",
+   "title": "Inside Jokes & Coded Language",
+   "stanzas": [
+    [
+     "We’ve already started building our own private little language,",
+     "A collection of weird references that only we can manage.",
+     "A quick side-eye across a room full of people we know,",
+     "Communicating entire sentences without making a show."
+    ],
+    [
+     "An old joke from three days ago that makes no sense to anyone else,",
+     "Stored away like little treasures kept high up on the shelf.",
+     "It’s early in the game, but the vault is filling fast",
+     "With memories and funny moments made to actually last."
+    ],
+    [
+     "When standard words fall short, an inside joke steps in,",
+     "Rewinding back to that moment with a subtle, knowing grin.",
+     "It’s our own tiny world tucked inside the bigger one outside,",
+     "Where every little glance becomes a secret place to hide."
+    ]
+   ],
+   "page": "poems/poem7.html"
+  },
+  {
+   "id": "poem-8",
+   "title": "My Favorite Distraction",
+   "stanzas": [
+    [
+     "I’m supposed to be focused, I’ve got a long task list today,",
+     "But my mind keeps taking detours and wandering your way.",
+     "I stare at a blank screen, replaying how you laughed last night,",
+     "Remembering the way your hair looked in the dim restaurant light."
+    ],
+    [
+     "Work can wait a few extra minutes while I relive the conversation,",
+     "Lost entirely in this brand new, wonderful distraction.",
+     "You’ve officially taken over the background of my mind,",
+     "Pushing all the stressful, boring worries far behind."
+    ],
+    [
+     "I try to pull myself together and act like I'm locked in,",
+     "Then your text comes through and the distraction starts again.",
+     "And honestly? I wouldn't trade this lack of focus for the world,",
+     "Watching this new dynamic slowly get unfurled."
+    ]
+   ],
+   "page": "poems/poem8.html"
+  },
+  {
+   "id": "poem-9",
+   "title": "Sanctuary in the Noise",
+   "stanzas": [
+    [
+     "The rest of the world moves fast, demanding way too much,",
+     "Constantly rushing around, out of tune and out of touch.",
+     "But stepping into our space feels like hitting a total pause,",
+     "Escaping all the daily stress, the expectations, and the laws."
+    ],
+    [
+     "With you, there’s no pressure to be impressive or act grand,",
+     "Just sitting side by side, enjoying where we land.",
+     "A safe haven built without a single brick or wooden beam,",
+     "Much more grounded and reliable than any distant dream."
+    ],
+    [
+     "When the day gets heavy and the noise begins to rise,",
+     "I find an instant sense of quiet looking in your eyes.",
+     "It’s a brand new sanctuary, simple, quiet, and clear,",
+     "Where all the outside clutter just seems to disappear."
+    ]
+   ],
+   "page": "poems/poem9.html"
+  },
+  {
+   "id": "poem-10",
+   "title": "Taking It Day by Day",
+   "stanzas": [
+    [
+     "We don't need to overthink where this goes down the line,",
+     "Or try to map out future years like some master design.",
+     "We don’t have to rush the steps or stress about what’s next,",
+     "Analyzing every milestone like a complicated text."
+    ],
+    [
+     "Let’s just take it day by day, enjoying where we are right now,",
+     "Appreciating how we got here without worrying about how",
+     "The future holds its pieces, or what tomorrow has to bring,",
+     "As long as we keep enjoying the simple, present thing."
+    ],
+    [
+     "Here’s to the nervous beginnings, the awkward moments and the grace,",
+     "Taking every single step together at our own steady pace.",
+     "Just two people starting out, hands intertwined and free,",
+     "Excited for the next chapter of whatever this will be."
+    ]
+   ],
+   "page": "poems/poem10.html"
+  }
+ ],
+ "apologyPoems": [
+  {
+   "title": "Where I Fell Short",
+   "stanzas": [
+    [
+     "There were days you needed more than I knew how to give,",
+     "A calmer kind of patience, a gentler way to live.",
+     "I answered you too slowly, I noticed things too late,",
+     "And let the little silences grow heavy with their weight."
+    ],
+    [
+     "I told myself you'd understand, that there was always time,",
+     "That love could fill the empty space between each careless line.",
+     "But love is in the showing up, not only in the word,",
+     "And I'm sorry for the moments when you felt unheard."
+    ],
+    [
+     "You never asked for perfect, you only asked for true,",
+     "For someone who would notice all the quiet things you do.",
+     "And if I missed them, even once, I need you to know:",
+     "It wasn't that I didn't care — I just learned too slow."
+    ]
+   ]
+  },
+  {
+   "title": "Not Enough",
+   "stanzas": [
+    [
+     "Some nights I lie awake and count the ways I've fallen short,",
+     "The moments I was distant when you needed my support.",
+     "You deserve someone steady, someone certain, someone whole,",
+     "And I'm still only learning how to give you all my soul."
+    ],
+    [
+     "I'm not the finished version of the man I want to be,",
+     "I'm rough around the edges, still unsure of half of me.",
+     "But every flaw I carry, I can see it clearer now,",
+     "And seeing is the first step — I'm still learning how."
+    ],
+    [
+     "So if I wasn't enough for you on days you needed more,",
+     "I'm sorry that you had to knock on such a heavy door.",
+     "I'm not asking you to settle, or to wait on me forever,",
+     "Just let me show you I can grow — and grow with you, together."
+    ]
+   ]
+  },
+  {
+   "title": "What I Can Promise",
+   "stanzas": [
+    [
+     "I can't promise I won't stumble, I can't promise I won't fall,",
+     "I can't promise every answer or the perfect words at all.",
+     "But I can promise honesty, and effort every day,",
+     "And when I'm wrong, I'll own it, not just hope it goes away."
+    ],
+    [
+     "I'll listen when you're quiet, I'll ask instead of guess,",
+     "I'll show up on the ordinary days, not just the best.",
+     "I'll learn the way you need to be loved, not the way I planned,",
+     "And hold on to you gently, with a softer, steadier hand."
+    ],
+    [
+     "You were never too much, Ain — I just wasn't yet enough,",
+     "But I'm staying, and I'm growing, even when it's rough.",
+     "So here's my heart, a little bruised, but honest, and still true:",
+     "I'm sorry. And I'm trying. And I'm still choosing you."
+    ]
+   ]
+  }
+ ],
+ "quotes": {
+  "heart": [
+   "\"You mean the world to me, beyond what words can describe.\"",
+   "\"My heart made its choice. I offer you my sincere love.\"",
+   "\"You bring light to my every day. I belong to you.\"",
+   "\"When I'm with you, I've found my comfort. My love for you has no end.\"",
+   "\"Time spent with you is precious. You carry my heart.\"",
+   "\"I admit it: without you, something feels missing.\"",
+   "\"You're everything I ever wanted. My love stretches to infinity.\"",
+   "\"My soul found its match. This is my vow to you.\"",
+   "\"Each day I fall for you more. You are my joy.\"",
+   "\"Our story begins here. I love you, now and always.\""
+  ],
+  "others": [
+   "\"The best thing to hold onto in life is each other.\" — Audrey Hepburn",
+   "\"You are my sun, my moon, and all my stars.\" — E.E. Cummings",
+   "\"In all the world, there is no love for you like mine.\" — Maya Angelou",
+   "\"I love you not only for what you are, but for what I am when I am with you.\" — Roy Croft"
+  ]
+ }
+}
